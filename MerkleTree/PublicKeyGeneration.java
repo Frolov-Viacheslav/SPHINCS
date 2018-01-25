@@ -1,22 +1,23 @@
 package MerkleTree;
 import Config.*;
+import WOTS_CR.*;
 
 public class PublicKeyGeneration {
     PRG prg = new PRG();
-
+    KeyPairGeneration kpg = new KeyPairGeneration();
+    
     public String privateKeyGeneration(){
-        String privateKey = prg.Random128();
-        String hashPrivateKey = MD5HEX.md5Custom(privateKey);
+        String hashPrivateKey = MD5HEX.md5Custom(kpg.X);
         return hashPrivateKey;
     }
 
     public String publicKeyGeneration(){
-        String publicKey = prg.Random128();
-        String hashPublicKey = MD5HEX.md5Custom(publicKey);
+        String hashPublicKey = MD5HEX.md5Custom(kpg.Y);
         return hashPublicKey;
     }
 
-    public String [][] creationKeysArray(Integer N){
+    public String [][] creationKeysArray(Integer s, Integer w, Integer N){
+        kpg.generatePairKey(s, w);
         String [][] keysArray = new String[2][N];
         for(int i = 0; i < N; i++) {
             keysArray[0][i] = privateKeyGeneration();
