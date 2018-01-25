@@ -17,9 +17,9 @@ public class PublicKeyGeneration {
     }
 
     public String [][] creationKeysArray(Integer s, Integer w, Integer N){
-        kpg.generatePairKey(s, w);
         String [][] keysArray = new String[2][N];
         for(int i = 0; i < N; i++) {
+            kpg.generatePairKey(s, w);
             keysArray[0][i] = privateKeyGeneration();
             keysArray[1][i] = publicKeyGeneration();
         }
