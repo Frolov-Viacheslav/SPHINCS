@@ -27,10 +27,12 @@ public class PublicKeyGeneration {
     }
 
     public static String root;
-
+    public static String[][] tree;
+    public static int countLayer;
+    
     public String treeBilding(String [][] keysArray, Integer N){
-        int countLayer = (int)Math.ceil(Binarylog.binlog((double) N)) + 1;
-        String[][] tree = new String[countLayer][N];
+        countLayer = (int)Math.ceil(Binarylog.binlog((double) N)) + 1;
+        tree = new String[countLayer][N];
         for(int i = 0; i < N; i++) {
             tree[0][i] = keysArray[1][i];
         }
@@ -43,12 +45,13 @@ public class PublicKeyGeneration {
             k = 0;
         }
 
-        for (int i = 0; i < countLayer; i++) {
+        /*for (int i = 0; i < countLayer; i++) {
             for (int j = 0; j < N; j++) {
                 System.out.print(tree[i][j] + "\t");
             }
             System.out.println();
-        }
+        }*/
+
         root = tree[countLayer-1][0];
         return root;
     }
