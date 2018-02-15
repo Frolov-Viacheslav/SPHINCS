@@ -14,4 +14,10 @@ WOTS_CR.SignatureVerification sv = new WOTS_CR.SignatureVerification();
         boolean equalSignature = false;
         return  equalSignature;
     }
+    
+    public String getAuthPath(String SIGNATURE, Integer s, Integer countLayer){
+        String authPath;
+        authPath = SIGNATURE.substring(s/4 * 2, (s/4 * 2) + (s/4 * (countLayer - 1)));
+        return authPath;
+    }
 }
