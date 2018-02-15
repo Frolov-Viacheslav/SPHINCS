@@ -5,7 +5,7 @@ import WOTS_CR.*;
 public class PublicKeyGeneration {
     PRG prg = new PRG();
     KeyPairGeneration kpg = new KeyPairGeneration();
-    
+
     public String privateKeyGeneration(){
         String hashPrivateKey = MD5HEX.md5Custom(kpg.X);
         return hashPrivateKey;
@@ -16,8 +16,10 @@ public class PublicKeyGeneration {
         return hashPublicKey;
     }
 
+    public static String [][] keysArray;
+
     public String [][] creationKeysArray(Integer s, Integer w, Integer N){
-        String [][] keysArray = new String[2][N];
+        keysArray = new String[2][N];
         for(int i = 0; i < N; i++) {
             kpg.generatePairKey(s, w);
             keysArray[0][i] = privateKeyGeneration();
@@ -29,7 +31,7 @@ public class PublicKeyGeneration {
     public static String root;
     public static String[][] tree;
     public static int countLayer;
-    
+
     public String treeBilding(String [][] keysArray, Integer N){
         countLayer = (int)Math.ceil(Binarylog.binlog((double) N)) + 1;
         tree = new String[countLayer][N];
@@ -45,12 +47,12 @@ public class PublicKeyGeneration {
             k = 0;
         }
 
-        /*for (int i = 0; i < countLayer; i++) {
+        for (int i = 0; i < countLayer; i++) {
             for (int j = 0; j < N; j++) {
                 System.out.print(tree[i][j] + "\t");
             }
             System.out.println();
-        }*/
+        }
 
         root = tree[countLayer-1][0];
         return root;
