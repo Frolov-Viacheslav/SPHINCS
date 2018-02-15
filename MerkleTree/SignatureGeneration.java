@@ -5,7 +5,7 @@ import WOTS_CR.*;
 public class SignatureGeneration {
 
     WOTS_CR.SignatureGeneration sg = new WOTS_CR.SignatureGeneration();
-    public static String SIGNATURE = "";
+   // public static String SIGNATURE = "";
 
     public String authPathCalculate(String key, String [][] tree, Integer N, Integer countLayer){
         int keyIndex = 0;
@@ -32,8 +32,8 @@ public class SignatureGeneration {
         return sg.SIGNATURE;
     }
 
-    public void SignatureGeneration(String key, String Message, Integer s, Integer w, String [][] tree, Integer N, Integer countLayer, String root){
-         SIGNATURE = key + oneTimeSignatureGeneration(Message, s, w) + authPathCalculate(key, tree, N, countLayer) + root;
+    public String SignatureGeneration(String key, String Message, Integer s, Integer w, String [][] tree, Integer N, Integer countLayer, String root){
+        String SIGNATURE = key + oneTimeSignatureGeneration(Message, s, w) + authPathCalculate(key, tree, N, countLayer) + root;
+        return SIGNATURE;// oneTimeY + oneTimeSig + authPath + root
     }
 }
-
