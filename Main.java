@@ -12,5 +12,8 @@ public class Main {
         System.out.printf("Input parametr N (power of 2):\n");
         int N = Integer.parseInt(nCount.nextLine());
         pkg.treeBilding(pkg.creationKeysArray(s, w, N), N);
+        System.out.println("countLayer is " + pkg.countLayer);
+        System.out.println("root is " + pkg.root);
+        System.out.println("tree is " + pkg.tree);
     }
 }
