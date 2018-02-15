@@ -5,15 +5,35 @@ import WOTS_CR.*;
 public class SignatureGeneration {
 
     WOTS_CR.SignatureGeneration sg = new WOTS_CR.SignatureGeneration();
+    public static String SIGNATURE = "";
 
-    String[] oneTimeSignature;
-    public void authPathCalculate(){
-        oneTimeSignature[1] = "1";
+    public String authPathCalculate(String key, String [][] tree, Integer N, Integer countLayer){
+        int keyIndex = 0;
+        String authPath = "";
+        for(int i = 0; i < N; i++) {
+            if(tree[0][i] == key)
+                keyIndex = i;
+        }
+        for(int i = 0; i < countLayer - 1; i++) {
+            if(keyIndex % 2 == 0){
+                keyIndex ++;
+            }
+            else {
+                keyIndex --;
+            }
+            authPath += tree[i][keyIndex];
+            keyIndex /= 2;
+        }
+        return authPath;
     }
+
     public String oneTimeSignatureGeneration(String Message, Integer s, Integer w) {
         sg.generateSignature(Message, s, w);
         return sg.SIGNATURE;
     }
 
-
+    public void SignatureGeneration(String key, String Message, Integer s, Integer w, String [][] tree, Integer N, Integer countLayer, String root){
+         SIGNATURE = key + oneTimeSignatureGeneration(Message, s, w) + authPathCalculate(key, tree, N, countLayer) + root;
+    }
 }
+
