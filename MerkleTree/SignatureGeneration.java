@@ -33,7 +33,8 @@ public class SignatureGeneration {
     }
 
     public String SignatureGeneration(String key, String Message, Integer s, Integer w, String [][] tree, Integer N, Integer countLayer, String root){
-        String SIGNATURE = key + oneTimeSignatureGeneration(Message, s, w) + authPathCalculate(key, tree, N, countLayer) + root;
+        MD5HEX md5H = new MD5HEX();
+        String SIGNATURE = key + md5H.md5Custom(oneTimeSignatureGeneration(Message, s, w)) + authPathCalculate(key, tree, N, countLayer) + root;
         return SIGNATURE;// oneTimeY + oneTimeSig + authPath + root
     }
 }
