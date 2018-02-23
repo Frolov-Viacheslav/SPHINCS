@@ -3,11 +3,11 @@ import Config.*;
 import WOTS_CR.*;
 
 public class PublicKeyGeneration {
-    PRG prg = new PRG();
+   // PRG prg = new PRG();
     KeyPairGeneration kpg = new KeyPairGeneration();
 
     public String privateKeyGeneration(){
-        String hashPrivateKey = MD5HEX.md5Custom(kpg.X);
+        String hashPrivateKey = kpg.X;
         return hashPrivateKey;
     }
 
