@@ -4,7 +4,7 @@ public class KeyPairGeneration {
     Binarylog bl = new Binarylog();
     PRG prg = new PRG();
     MD5Binary md5B = new MD5Binary();
-    MD5HEX md5H = new MD5HEX();
+   // MD5HEX md5H = new MD5HEX();
     public static int t;
     public static int t1;
     public static int t2;
@@ -22,14 +22,15 @@ public class KeyPairGeneration {
         calculateLengths(s, w);
         String Xi = "";
         String Yi = "";
-
+        X = "";
+        Y = "";
         for(int i = 1; i <= t; i++){
             Xi = prg.Random128();
             X += Xi;
             Yi = calculateYi(Xi, Yi, w);
             Y += Yi;
         }
-        Y = md5H.md5Custom(Y);
+        //Y = md5H.md5Custom(Y);
     }
 
     private String calculateYi(String Xi, String Yi, Integer w){
