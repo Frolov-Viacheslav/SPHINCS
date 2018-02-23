@@ -23,12 +23,10 @@ public class Main {
         //Signinig
         int keyIndex = 0;
         signing(w, N, args, keyIndex);
+
     }
 
     public static void signing(Integer w, Integer N, String[] args, Integer keyIndex){
-        PublicKeyGeneration pkg = new PublicKeyGeneration();
-        SignatureGeneration sg = new SignatureGeneration();
-        SignatureVerification sv = new SignatureVerification();
         MD5Binary md5b = new MD5Binary();
         //Parametr s and message
         Scanner inMessage = new Scanner(System.in);
@@ -37,15 +35,16 @@ public class Main {
         Message = md5b.md5Custom(Message);
         int s = Message.length();
         //OTS key selection
-        int keysResidue;
-        keysResidue = N - (keyIndex + 1);
-        String key = chooseOTS(pkg.keysArray, keyIndex);
+        int keysResidue = N - (keyIndex + 1);
+
+        String X = PublicKeyGeneration.keysArray[0][keyIndex];
+        String Y = PublicKeyGeneration.keysArray[1][keyIndex];
+
+        System.out.println("Current index: " + keyIndex + " Remainder of keys: " + keysResidue);
         keyIndex++;
-        System.out.println("Current index: " + (keyIndex - 1) + " Remainder of keys: " + keysResidue);
         //Merkle
-        System.out.println(sg.SignatureGeneration(key, Message, s, w, pkg.tree, N, pkg.countLayer, pkg.root));
-        System.out.println(sg.authPathCalculate(key, pkg.tree, N, pkg.countLayer));
-        System.out.println(sv.getAuthPath(sg.SignatureGeneration(key, Message, s, w, pkg.tree, N, pkg.countLayer, pkg.root), s, pkg.countLayer));
+        System.out.println("X: " + X);
+        MerkleCalculate(Message, Y, X, s, w, N);
         //Exit
         if(keysResidue == 0){
             System.out.println("Key limit is reached");
@@ -67,8 +66,17 @@ public class Main {
         }
     }
 
-    public static String chooseOTS(String [][] keysArray, Integer keyIndex){
-        String OTSKey = keysArray[1][keyIndex];
-        return OTSKey;
+
+    public static void MerkleCalculate(String Message, String Y, String X, Integer s, Integer w, Integer N){
+        SignatureGeneration sg = new SignatureGeneration();
+        SignatureVerification sv = new SignatureVerification();
+        String Signature = sg.SignatureGeneration(Y, Message, s, w, PublicKeyGeneration.tree, N, PublicKeyGeneration.countLayer, PublicKeyGeneration.root, X);
+        System.out.println("Signature = " + Signature);
+        System.out.println("Y = " + Y);
+        boolean verify = sv.allSignatureVerify(PublicKeyGeneration.countLayer, Signature, s, w, PublicKeyGeneration.root, SignatureGeneration.OneTimeSignature, Message, Y);
+        if(verify)
+            System.out.println("Signature is valid");
+        else
+            System.out.println("Signature is not valid");
     }
 }
