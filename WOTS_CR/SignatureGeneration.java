@@ -1,9 +1,7 @@
 package WOTS_CR;
 import Config.*;
 public class SignatureGeneration {
-
-    Binarylog bl = new Binarylog();
-    KeyPairGeneration kp = new KeyPairGeneration();
+    
     MD5Binary md5B = new MD5Binary();
     public String CBinary = ""; // CheckSum binary
 
@@ -79,13 +77,13 @@ public class SignatureGeneration {
 
     public String SIGNATURE = "";
 
-    public void generateSignature(String Message, Integer s, Integer w) {
+    public void generateSignature(String Message, Integer s, Integer w, String X) {
         Integer[]b = messagePlusCheckSum(Message, s, w);
         //System.out.println("Full Array = " + Arrays.toString(messagePlusCheckSum(Message, s, w)));
         String Xi = "";
         //System.out.println("blen = " + b.length);
         for (int i = 0; i < KeyPairGeneration.t; i++) {
-            Xi = KeyPairGeneration.X.substring(i * s, i * s + s); // нахождение подстроки с длиной в s символ
+            Xi = X.substring(i * s, i * s + s); // нахождение подстроки с длиной в s символ
             SIGNATURE += calculateSignatureI(Xi, b[i]);
         }
     }
