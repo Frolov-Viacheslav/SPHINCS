@@ -48,7 +48,7 @@ public class Main {
         //Exit
         if(keysResidue == 0){
             System.out.println("Key limit is reached");
-            System.out.println("Exit or create new tree? (0 - Exit, 1 - Create new tree):\n");
+            System.out.println("Exit or create new tree? (0 - Exit, 1 - Create new tree):");
             Scanner inExit = new Scanner(System.in);
             int exitOrNot = Integer.parseInt(inExit.nextLine());
             if(exitOrNot == 1){
@@ -58,7 +58,7 @@ public class Main {
             else System.exit(0);
         }
         Scanner inExit = new Scanner(System.in);
-        System.out.println("Exit or not? (0 - Exit, 1 - Start):\n");
+        System.out.println("Exit or not? (0 - Exit, 1 - Start):");
         int exitOrNot = Integer.parseInt(inExit.nextLine());
         if(exitOrNot == 1){
             //Reboot();
