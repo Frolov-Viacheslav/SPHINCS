@@ -32,16 +32,22 @@ public class PublicKeyGeneration {
     public static String[][] tree;
     public static int countLayer;
 
-    public String treeBilding(String [][] keysArray, Integer N){
+    public String treeBilding(String [][] keysArray, Integer N){ // Tree building with L-Tree
         countLayer = (int)Math.ceil(Binarylog.binlog((double) N)) + 1;
-        tree = new String[countLayer][N];
+        if(keysArray[1].length % 2 == 0)
+            tree = new String[countLayer][N];
+        else
+            tree = new String[countLayer][N+1];
         for(int i = 0; i < N; i++) {
             tree[0][i] = keysArray[1][i];
         }
         int k = 0;
         for (int i = 1; i < countLayer; i++) {
-            for (int j = 0; j < N/(Math.pow(2, i-1)); j+=2) {
-                tree[i][k] =  MD5HEX.md5Custom(tree[i-1][j] + tree[i-1][j+1]);
+            for (int j = 0; j < N / (Math.pow(2, i - 1)); j += 2) {
+                if(tree[i - 1][j + 1] != null)
+                    tree[i][k] = MD5HEX.md5Custom(tree[i - 1][j] + tree[i - 1][j + 1]);
+                else
+                    tree[i][k] = tree[i - 1][j];
                 k++;
             }
             k = 0;
