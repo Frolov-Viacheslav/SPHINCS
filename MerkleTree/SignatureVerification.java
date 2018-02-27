@@ -2,8 +2,7 @@ package MerkleTree;
 import Config.*;
 public class SignatureVerification {
 
-WOTS_CR.SignatureVerification sv = new WOTS_CR.SignatureVerification();
-    MD5HEX md5H = new MD5HEX();
+    WOTS_CR.SignatureVerification sv = new WOTS_CR.SignatureVerification();
 
     public boolean allSignatureVerify(Integer countLayer, String authPath, Integer s, Integer w, String realRoot, String SIGNATURE, String Message, String Y){
         boolean verify = false;
@@ -28,15 +27,17 @@ WOTS_CR.SignatureVerification sv = new WOTS_CR.SignatureVerification();
         String root = key;
         for(int i = 0; i < countLayer - 1; i++) {
             String temp = authPath;
-            temp = temp.substring(i * s/4, i * s/4 + s/4); // нахождение подстроки с длиной в s символ
-            if(authPathBit.substring(i, i + 1).compareTo("0") == 0) {
-                root += temp;
+            temp = temp.substring(i * s / 4, i * s / 4 + s / 4); // нахождение подстроки с длиной в s символ
+            if(temp.compareTo(root) != 0) {
+                if(authPathBit.substring(i, i + 1).compareTo("0") == 0) {
+                    root += temp;
+                }
+                else{
+                    temp += root;
+                    root = temp;
+                }
+                root = MD5HEX.md5Custom(root);
             }
-            else {
-                temp += root;
-                root = temp;
-            }
-            root = md5H.md5Custom(root);
         }
         if(root.compareTo(realRoot) == 0)
             verify = true;
