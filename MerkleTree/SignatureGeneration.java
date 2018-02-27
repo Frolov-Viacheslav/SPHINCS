@@ -3,14 +3,14 @@ package MerkleTree;
 public class SignatureGeneration {
     WOTS_CR.SignatureGeneration sg = new WOTS_CR.SignatureGeneration();
     public static String OneTimeSignature = "";
-    public  String authPathBit = "";
+    public String authPathBit = "";
 
     public String authPathCalculate(String key, String [][] tree, Integer N, Integer countLayer){
         int keyIndex = 0;
         authPathBit = "";
         String authPath = "";
         for(int i = 0; i < N; i++) {
-            if(tree[0][i] == key)
+            if(tree[0][i].compareTo(key) == 0)
                 keyIndex = i;
         }
         for(int i = 0; i < countLayer - 1; i++) {
@@ -22,12 +22,14 @@ public class SignatureGeneration {
                 keyIndex --;
                 authPathBit += 1;
             }
-            authPath += tree[i][keyIndex];
+            if(tree[i][keyIndex] != null)
+                authPath += tree[i][keyIndex];
+            else
+                authPath += tree[i][keyIndex-1];
             keyIndex /= 2;
         }
         return authPath;
     }
-
 
     public String oneTimeSignatureGeneration(String Message, Integer s, Integer w, String X) {
         sg.generateSignature(Message, s, w, X);
